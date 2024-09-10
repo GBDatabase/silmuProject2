@@ -1,0 +1,12 @@
+[단축키] 
+(1) 수업 시간에 배운것
+	ctrl shift O : 자바 유틸 임포트
+	ctrl f11 : 프로젝트 실행
+	ctrl enter : 자동완성
+
+---
+(2) 필요해서 찾은 단축키
+	블록 주석 : ctrl shift /
+	블록 주석 풀기 : ctrl shift \
+		https://jju-code.tistory.com/9
+
