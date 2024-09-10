@@ -1,0 +1,66 @@
+# 0 프로그램 설정
+1. 검색
+https://spring.io/tools
+2. 워크스페이스 생성
+	사용자폴더에 2024_SpringBoot 라는 이름의 폴더 생성
+3. 폴더 검색창에 cmd 검색
+4. spring-tool-suite를 폴더에 넣고 다음과 같은 명령문을 쳐서 압축해제?해줌  
+java -jar spring-tool-suite-4-4.24.0.RELEASE-e4.32.0-win32.win32.x86_64.self-extracting.jar
+
+spring tool site 4 클릭
+	select  a directory as workspace를 
+	C:\Users\uhs-user\2024_SpringBoot\Project 
+로 해줌. project는 방금전에 만든 파일
+
+
+# 1 기타 설정
+인코딩 설정
+윈도우 > 프리퍼런스 > 제너럴 > workspace -> textfile encoding(other utf-8)
+
+웹 가져오기 위한 인스톨
+	help 메뉴 - eclipse marketplace - "java and web" 치고 검색 - eclipse enterprise java and web dveloper tools 3.34 - install 클릭
+	confirm  클릭 - i accept 눌러서 동의하고 finish (우측 하단에 installing software 하고 뜸)
+	- 설치했으면
+		시스템이 잘 돌아가도록 "always trust all content" 체크박스 클릭 - trust Selected 클릭 - restart now 클릭
+		점검 : preferences에 web이 있나요?
+
+ preferences에 web이 있다면
+preferences-web-css files- utf8 확인
+preferences-web-html files- utf8 확인
+preferences-web-jsp files- utf8 확인
+
+
+#2 프로젝트 hello world로 시스템 잘 돌아가는지 확인
+file - new - spring starter projecter 로 들어가
+	Name을 week1으로 설정하기
+		artifact id가 week1로 설정된다
+		type이 gradle - groovy 확인가능
+		java version : 17 확인 가능
+		packaging : jar 확인 가능
+		language : java 확인 가능
+
+new spring starter project dependencies : 필요한 것들을 체크하라는 뜻 , 의존성에 대해 설정 가능
+	available에 web - spring web 체크 하면
+	프로그램 우측 하단에 importing getting started content (0%) 하면서 필요한것을 가져오는 중
+	다만 여기서부턴 week1 오류가 나서 쓸수없음 
+		```
+			The supplied phased action failed with an exception.
+			Could not resolve all dependencies for configuration ':compileClasspath'.
+			Failed to calculate the value of task ':compileJava' property 'javaCompiler'.
+			Cannot find a Java installation on your machine matching this tasks requirements: {languageVersion=17, vendor=any, implementation=vendor-specific} for WINDOWS on x86_64.
+			No locally installed toolchains match and toolchain download repositories have not been configured.
+		```
+
+
+#2.1 그래서 해결한 방법이 
+file > new > spring starter proejct 해서 새 프로젝트를 만들어주고
+java version을 21로 설정 > next 버튼 클릭
+[new spring starter project Dependencies]에서 spring boot version: 을 3.2.9로 설정해주고
+Available :  Spring Web 체크박스 클릭 > finish 하면 week1이 생성됨
+	이후에 이 week1 오른쪽에 [boot]가 떠야함
+	
+
+
+# 3 만약 안되면 패스 환경 변수를 설정해 줘야함
+program files > java > jdk21 >\bin 복사해서 (C:\Program Files\Java\jdk-21\bin)
+고급 시스템 설정 - 환경 변수 - 시스템 변수 - path - 새로만들기 - 위에 복사한거 붙여넣기 저장  
