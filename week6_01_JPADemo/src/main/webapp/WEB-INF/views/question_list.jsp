@@ -9,7 +9,7 @@
 </head>
 <body>
 <h1>qna 목록</h1>
-
+<br>
 <table border="1" cellpadding="5">
 	<tr>
 		<th>ID </th>
