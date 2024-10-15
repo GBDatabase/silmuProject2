@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+
+<body>
+<!-- question_list.html -->>
+<h1> ★게시판 목록★</h1>
+<br>
+<table border="1" cellpadding="5">
+	<tr>
+		<th>ID</th>
+		<th>subject</th>		
+		<th>CreateDate</th>
+	</tr>
+	<!-- thymeleaf 를 이용한 반복처리 -->
+	<tr th:each="question : ${qList}">
+	<!-- 타임리프안의 접두어는 th 콜론을 기준으로 뭘읽을지에대한 아이템들 -->
+		<td th:text=${question.id}> </td>
+		<!-- <td th:text=${question.subject}> </td> -->
+		<td>
+			<a th:text=${question.subject} 
+				th:href="@{|/question/detail/${question.id}|}"> </a>  <!-- //문자열요청과 el이 합쳐졌음(연결이 되었을 경우)을 알려줄떼 앞과 뒤에 파이프기호를 써줘야함 -->
+		</td>
+		<td th:text=${question.CreateDate> </td>
+
+	</tr>
+</table>	
+<br>
+</body>
+</html>
