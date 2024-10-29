@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<link rel = "stylesheet" type="text/css" th:href]th:href="@{/style.css}">
+<link rel = "stylesheet" type="text/css" th:href]th:href="@{/bootstrap.min.css}">
+<!-- question_detail.html -->
+<!-- 질문 -->
+<div class="container my-3">
+	<!-- 질문 -->
+	<h2 class="border-bottom py-2" th:text="${question.subject}"></h2>
+	<div class="card my-3">
+		<div class="card-body">
+			<div class="card-text" th:text="${question.content"> 
+			</div>
+			<div class="card-d-flex justify-content-end">  <!-- 컨텐츠 정렬을 제일 오른쪽 끝에 하겠다 --> 
+				<div class="badge bg-light text-dark p-2 text-start">
+					<div th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd hh:mm'")}></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 답변 개수 표시하기 -->
+	<h5 class="border-bottom my-3 py-2" 
+		th:text="${|#lists.size(question.answerList)} 개의 답변이 있습니다."|></h5> <!-- //등록된 답변 갯수 , th가 제공하는 명령문은 #, 파이프 기호는 성격이다른 (예:string 과 int)가 있으면 양쪽에 넣어줌-->
+	
+	<!-- 답변 반복 시작 -->
+	<div class="card my-3" th:each="answer : ${question.answerList}">
+		<div class="card-body">
+			<div class="card-text" th:text="${answer.content}">
+			</div>
+			<div class="d-flex justify-content-end">
+				<div class="badge bg-light text-dark p-2 text-start">
+					<div thLtext="${#temporals.format(answer.createDate,'yyyy-MM-dd hh:mm')}">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> 
+			
+	<!-- 답변 기능 추가 , url로 요청 보낼때는 @-->
+	<form class="my-3" th:action="@{|answer/create/${question.id}|" method="post">
+		<textarea class="form-control" rows="15" cols="" name="content"></textarea>
+		<input class="btn btn-primary my-2" type="submit" value="답변등록">
+	</form>
+	
+	<!-- 버튼 추가 -->
+		<a class= "btn btn-primary" href="/question/insertform" role="botton">등록화면 </a>
+		<a class= "btn btn-primary" href="/question/index" role="botton">초기화면</a>
+</div>
+
+</body>
+</html>
