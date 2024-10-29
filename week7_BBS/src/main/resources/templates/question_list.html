@@ -1,12 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+<!-- layout.html의 템플릿 상속 위치 -->
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3"> <!-- 레이아웃의 div태그가 content의 조각이다???? -->
+	<table class="table-dark">
+		<tr>
+			<th>번후</th>
+			<th>제목</th>
+			<th>작성일시 </th>
+		</tr>
+	</table>
+</div>
 
-<body>
-<!-- question_list.html -->>
+	<tbody>
+		<tr th:each="question, loop : ${q,list}">
+			<td : th:text="$">
+				<a th:text=${question.subject} 
+				th:href="@{|/question/detail/${question/detail/${qudstion.id|}></td>a>
+			</td>
+			<td th:text="${#temporals.format(question.createate,'yy-mm-dd-hh:mm') ></td>
+		</tr> 
+	</tbody>
+
+		<div style="margin-top: 20px padding-left:50px">
+		<a class= "btn btn-primary" href="/question/insertform" role="botton">등록화면 </a>
+		<a class= "btn btn-primary" href="/question/index" role="botton"초기화면 ></a>
+	<!-- question_list.html -->>
 <h1> ★게시판 목록★</h1>
 <br>
 <table border="1" cellpadding="5">
@@ -28,6 +45,7 @@
 
 	</tr>
 </table>	
+<button onclick="location.href='/question/list'">목록화면</button>
+<button onclick="location.href='/question/index'">초기화면</button>
 <br>
-</body>
 </html>

@@ -1,5 +1,6 @@
 package com.mysite.bbs.question;
 
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -7,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class QuestionController {
     private final QuestionRepository qService;
 
-    @RequestMapping("/")
+    @GetMapping("/question/index")
     public String root() {
         return "index";
     }
@@ -34,10 +34,10 @@ public class QuestionController {
         q.setContent(content);
         q.setCreateDate(LocalDateTime.now());
         qService.save(q);
-        return "redirect:list";
+        return "redirect:/question/list";
     }
 
-    @GetMapping("list")
+    @GetMapping("/list")
     public String list(Model model) {
         List<Question> qList = qService.getList();
         model.addAttribute("qList", qList);
@@ -45,7 +45,7 @@ public class QuestionController {
 
     }
     
-    @GetMapping("/question/detail/{id}")
+    @GetMapping("/detail/{id}")
     public String detail(@PathVariable("id") int id,
     		Model model) { 
     	Question question = qService.getQuestion(id);
