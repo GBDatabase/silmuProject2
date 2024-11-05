@@ -26,7 +26,7 @@
 
 	<!-- 답변 개수 표시하기 -->
 	<h5 class="border-bottom my-3 py-2" 
-		th:text="${|#lists.size(question.answerList)} 개의 답변이 있습니다."|></h5> <!-- //등록된 답변 갯수 , th가 제공하는 명령문은 #, 파이프 기호는 성격이다른 (예:string 과 int)가 있으면 양쪽에 넣어줌-->
+		th:text="${|#lists.size(question.answerList)} 개의 답변이 있습니다.|"></h5> <!-- //등록된 답변 갯수 , th가 제공하는 명령문은 #, 파이프 기호는 성격이다른 (예:string 과 int)가 있으면 양쪽에 넣어줌-->
 	
 	<!-- 답변 반복 시작 -->
 	<div class="card my-3" th:each="answer : ${question.answerList}">
@@ -43,7 +43,9 @@
 	</div> 
 			
 	<!-- 답변 기능 추가 , url로 요청 보낼때는 @-->
-	<form class="my-3" th:action="@{|answer/create/${question.id}|" method="post">
+	<form th:object="${answerForm}" class="my-3" th:action="@{|/answer/create/${question.id}|" method="post">
+		
+		<div th:replace="~{form_errors:: formErrorsFragment}"></div>
 		<textarea class="form-control" rows="15" cols="" name="content"></textarea>
 		<input class="btn btn-primary my-2" type="submit" value="답변등록">
 	</form>

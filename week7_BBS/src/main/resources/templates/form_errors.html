@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- form_errors.html -->
+<div th:fragment="formErrrsFragment" th:if="${#fields.hasAnyErrors()}" class="alart-danger" role="alert"> </div>
+<div th:each="err : ${#fields.allErros()}"
+	 th:text="${err}"></div>
+			
+</body>
+</html>

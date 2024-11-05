@@ -11,7 +11,7 @@
 </div>
 
 	<tbody>
-		<tr th:each="question, loop : ${q,list}">
+		<tr th:each="question, loop : ${paging}">
 			<td : th:text="$">
 				<a th:text=${question.subject} 
 				th:href="@{|/question/detail/${question/detail/${qudstion.id|}></td>a>
@@ -19,9 +19,40 @@
 			<td th:text="${#temporals.format(question.createate,'yy-mm-dd-hh:mm') ></td>
 		</tr> 
 	</tbody>
+ 
+ <!-- 페이지 처리 부분 -->
+ <div th:if="${!paging.isEmpty}">
+ 	<!--  질문 목록이 하나라도 있으면 표시 -->
+ 	<ul class="pagination justifuy-content-center"></ul>
+ 		<li>
+ 			<!-- 제일 왼쪽은 이전 페이지 버튼-->
+ 			<li class="page-item" th:classappend="${!paging.hasPrevious}? 'disable'"><!--  이전객체의데이터가없으면 (!) 'disable' 시키겠다 -->
+ 			<a class="page-link" th:href="@{|?page=${paging.number-1}|}">
+ 				<span>이전</span>
+ 			</a>
+ 		</li>
+ 		<li th:each="page : $numbers.sequence(0,paging.totalPages-1)"   
+ 			th:if="${page >= paging.number-5 and page<= paging.number+5}"  <!-- 만약 10페이지면 56789 10  11 12 13 14 15 이렇게 --> 
+ 			th:classappend="${page == paging.number}? 'active'" class="page-item"> <!-- 전체를 다 읽어서 페이지에 넣는다 -->
+ 			<!-- 가운데는 현재 페이지 버튼 -->
+ 			
+ 		<a th:text="${page}" class="page-link" th:href="@(|?page=${page}|)"><</a> <!-- 현재페이지라고해서 현재페이지의 링크가 없으면 안됨 -->
+ 			
+ 		</li>
+ 		<li class="page-item"
+ 		th:clalssappend="${!paging.hasNext}?  'disable'">
+ 			<!--  오른쪽은 다음 페이지 버튼 -->
+ 			<li class="page-item" th:classappend="${!paging.hasPrevious}? 'disable'"><!--  다음객체의데이터가없으면 (!) 'disable' 시키겠다 -->
+ 			<a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+ 				<span>다음</span>
 
-		<div style="margin-top: 20px padding-left:50px">
-		<a class= "btn btn-primary" href="/question/insertform" role="botton">등록화면 </a>
+
+ 		</li>
+ 		
+ </div>
+        
+		<div style="margin-top: 20px; padding-left:50px;">
+		<a class= "btn btn-primary" th:href="@{/question/create}" role="botton">질문등록 </a>
 		<a class= "btn btn-primary" href="/question/index" role="botton"초기화면 ></a>
 	<!-- question_list.html -->>
 <h1> ★게시판 목록★</h1>
@@ -45,6 +76,11 @@
 
 	</tr>
 </table>	
+
+
+v
+
+
 <button onclick="location.href='/question/list'">목록화면</button>
 <button onclick="location.href='/question/index'">초기화면</button>
 <br>

@@ -1,6 +1,7 @@
 package com.mysite.bbs.answer;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import com.mysite.bbs.question.Question;
 import com.mysite.bbs.question.QuestionService;
 
 import ch.qos.logback.core.model.Model;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/answer")
@@ -21,12 +23,20 @@ public class AnswerController {
 	private final AnswerService answerService;
 	
 	//답변을 create 요청처리
-	@PostMapping("/create/id")
-	public String createAnswer(@PathVariable("id") int id, @RequestParam("content") String content,Model model){
+	@PostMapping("/create/{id}")
+	public String createAnswer(@PathVariable("id") int id, @Valid AnswerForm answerForm,BindingResult bindingResult,Model model){
 		Question question = questionService.getQuestion(id);
 		
+		//유효성 검사 결과 체크
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("question", question);
+			return "question_detail";
+			
+		}
+		
+		
 		// 답변을 저장하는 코드
-		answerService.create(question, content);
+		answerService.create(question, answerForm.getContent());
 		return String.format("redirect:/question/detail/%s", id);
 	
 	}

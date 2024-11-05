@@ -1,0 +1,26 @@
+<html layout:decorate="~{layout}">
+<!-- question_form.html -->
+
+<div layout:fragment="content" class="container my-3">
+	<h5 class="my-3 border-bottom pd-2">질문등록</h5>
+
+	
+	<form th:action="@{/question/create/}" th:object="${questionForm}" method="post"> <!-- 값없이 get방식과 값있게 post 방식 -->
+		<!-- 오류발생시 오류 메시지 표시 -->
+		<div th:replace="~{form_errors:: formErrorsFragment}"></div>
+		<div th:each="err : ${#fields.allErorrs()}"
+		th:text=${err}> </div>
+		<div class="mb-3">
+			<label class="form-label">제목</label>
+		<input type="text" th:field="*{subject}" class="form-control"></input> <!-- name id value 속성이 함축적으로 포함되어있는게 타임리프의 특징임 -->
+		
+		</div>
+		<div class="mb-3">
+			<lable class="form-label">내용</lable>
+			<textarea rows="10" th:field="*{content}" class="form-control"></textarea>
+		</div>
+		<input type="submit" value="저장하기" class="btn btn-primary my-2">
+	</form>	
+</div>
+
+</html>
