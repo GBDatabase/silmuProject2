@@ -19,6 +19,8 @@
 	<form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post" >
 		
 		<!-- 유효성 검증 오류 메시지 표시  -->
+		<!-- 반복되는 부분은 모듈화 시키면 된다 -->
+	<!-- 포스트방식으로 보내서 *{username}같은것들이 넘어오니 이제 컨트롤러로 가줌 -->
 		<div th:rplae-"~{form_errors :: formErrorsFragment}"></div>
 		
 		<div class="mb-3">

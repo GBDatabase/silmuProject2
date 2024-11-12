@@ -53,11 +53,11 @@ public class UserController {
 			return "redirect:/";
 			} catch(DataIntegrityViolationException e) {
 				e.pringStackTrace();
-				bindingResult.rejectValue("signupFailed", "이미 등록된 사용자입니다.");
+				bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
 				return "signup_form";
 			} catch(DataIntegrityViolationException e) {
 				e.pringStackTrace();
-				bindingResult.rejectValue("signupFailed", e.getMessage());
+				bindingResult.reject("signupFailed", e.getMessage());
 				return "signup_form";
 
 	}
