@@ -1,0 +1,52 @@
+<!--  signup_form.html  -->
+
+<!-- 확장은 ~임 -->
+<html layout:decorate="~{layout}"
+
+
+<!-- 컨텐츠(content)라고 되어있는 부분에 div 태그를 주겠다 --> 
+<div layout : fragment="content" class="container my-3">
+	
+	<div class ="border-bottom my-3">	
+	<div>
+		<div>
+			<h4> 회원가입</h4>
+		</div>
+	</div>
+	
+	
+	<!-- //usercreatefrorm이라는 오브젝트를 사용할 것임 -->
+	<form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post" >
+		
+		<!-- 유효성 검증 오류 메시지 표시  -->
+		<div th:rplae-"~{form_errors :: formErrorsFragment}"></div>
+		
+		<div class="mb-3">
+			<label class="form-label">사용자 ID</label>
+			<!-- //필드값을 주면 입력한 값이 안사라짐 . th:field 여기.-->
+			<input type="text" th:fied="*{username}" class="form-control">
+		</div>
+	
+		<div class="mb-3">
+			<label class="form-label">비밀번호</label>
+			<input type="password" th:fied="*{password1}" class="form-control">
+		</div>	
+		<div class="mb-3">
+			<label class="form-label">비밀번호 확인</label>
+			<input type="password" th:fied="*{password2}" class="form-control">
+		</div>
+		<div class="mb-3">
+			<label class="form-label">이메일</label>
+			<input type="email" th:fied="*{email}" class="form-control">
+		</div>	
+		
+		<button type="submit" class="btn btn-primary"> 회원가입</button>
+	</form>
+
+
+
+</div>
+
+
+
+</html>

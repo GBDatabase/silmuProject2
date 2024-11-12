@@ -12,9 +12,12 @@
 
 	<tbody>
 		<tr th:each="question, loop : ${paging}">
-			<td : th:text="$">
+			<td : th:text="${paging.getTotalElements - (paging.numer*paging.size) - loop.index}">
 				<a th:text=${question.subject} 
 				th:href="@{|/question/detail/${question/detail/${qudstion.id|}></td>a>
+			<span class="alert text-danger small ms-2"
+				th:if="${#lists.size(question.answerList)>0}"
+				th:text="$(#lists.size(question.aswerList))>
 			</td>
 			<td th:text="${#temporals.format(question.createate,'yy-mm-dd-hh:mm') ></td>
 		</tr> 
