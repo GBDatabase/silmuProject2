@@ -5,6 +5,7 @@
 		<tr>
 			<th>번후</th>
 			<th>제목</th>
+			<th>글쓴이</th>
 			<th>작성일시 </th>
 		</tr>
 	</table>
@@ -18,7 +19,17 @@
 			<span class="alert text-danger small ms-2"
 				th:if="${#lists.size(question.answerList)>0}"
 				th:text="$(#lists.size(question.aswerList))>
+			</span>
 			</td>
+			<!-- 글쓴이 표시 -->
+			<td>
+				<!-- question의 질문자가 null이 아니면, 화면에 test를 출력해줌. author객체 안에 있는 user명을 출력해줌 -->
+				<span th:if="${question.author != null}"
+					th:text="${question.author.username}">
+				</span>
+			</td>
+			
+			
 			<td th:text="${#temporals.format(question.createate,'yy-mm-dd-hh:mm') ></td>
 		</tr> 
 	</tbody>

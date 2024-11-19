@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mysite.bbs.question.Preauthorize;
 import com.mysite.bbs.question.Question;
 import com.mysite.bbs.question.QuestionService;
 
@@ -21,7 +22,9 @@ public class AnswerController {
 	//답변을 하기 위해서는 질문이 있어야 함.
 	private final QuestionService questionService;
 	private final AnswerService answerService;
+	private final UserService userService;
 	
+	@Preauthorize("isAuthenticated()")
 	//답변을 create 요청처리
 	@PostMapping("/create/{id}")
 	public String createAnswer(@PathVariable("id") int id, @Valid AnswerForm answerForm,BindingResult bindingResult,Model model){

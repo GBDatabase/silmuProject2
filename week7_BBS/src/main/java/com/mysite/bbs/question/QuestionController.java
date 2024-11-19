@@ -11,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +27,10 @@ public class QuestionController {
         //return "index";
         return "redirect:/question/testData";
     }
-
+    
+    @Preauthorize("isAuthenticated()")
     @GetMapping("/testData") 
-    public String testData() {
+    public String testData(principal principal) {
     	for (int i=1;i<=300; i++)	{
     		Question q = new Question();
     		q.setSubject("테스트 데이터 입니다:[" + i + "]");
@@ -36,16 +39,20 @@ public class QuestionController {
     		q.setContent(subject);
     		q.setContent(content);
     		q.setCreateDate(LocalDateTime.now());
+    		
+    		siteuser siteuser = userservice.getUser(principal.getName());
     		qService.save(q);
     	}
     	return "redirct:/question/list";
     }
     
+    @Preauthorize("isAuthenticated()")
     @GetMapping("/create")
     public String questionCreate(QuestionForm questionForm) {
         return "question_form";
     }
 
+    @Preauthorize("isAuthenticated()")
     @GetMapping("/create")
     public String questionCreate(@Valid QuestionForm questionForm,
  BindingResult bindingResult) {
@@ -103,4 +110,32 @@ public class QuestionController {
     	return "question_detail";
     }
     
+    @Preauthorize("isAuthenticated()")
+    @GetMapping("modify/{id}")
+	/* question에 있는 author이랑 , principal.getName이 같은지 검사 */
+	
+    public String questionModify(QuestionForm questionForm,
+    							@PathVariable("id") int id,
+    							Principal principal) {
+    	Question question =qService.getQuestion(id);
+    	if(!question.getAuthor().getUsername().equals(principal.getName()))
+    		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다");
+    }
+    /* 아이디에 있는 정보를 question form 에다가 저장해서 넘김 */
+    
+    question.setSubject(question.getSubject());
+    question.setSubject(question.getContent());
+    
+    /*question 등록할때의 폼을 수정할때의 폼으로 쓰는 이유는 , 요약하면 수정폼을 만들지 않고 등록할때의 폼을 쓰는 이유는
+    form태그 안에있는 action을 지워서 사용함
+    action 속성이 없이 폼을 submit하면 자동으로 현재 url 기준으로 전달되*/
+    return "question_form"
+    
 }
+
+
+
+
+
+
+

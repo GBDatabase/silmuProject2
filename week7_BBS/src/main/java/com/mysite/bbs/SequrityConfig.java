@@ -5,7 +5,8 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-@Enablewebsecurity
+@EnableWebSecurity
+@EnablMethodSecurity(prePostEnabled = true)
 //스프링 시큐리티는 웹사이트의 콘텐츠가 다른 사이트에 포함되지않도록 하기위해 x-frame-option 헤더의 기본값을 deny로 사용
 public class SequrityConfig {
 	
