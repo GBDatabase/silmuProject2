@@ -26,10 +26,10 @@
 				</div>
 			</div>
 			<!-- 질문 내용 수정 버튼 추가 -->
-			수정버튼은 누르면 질문을 수정하는 화면으로 넘어가야함. 새로운 부분이 있으므로 코드를 하나씩 입력하면서, 현재 질문이 몇번째 값인지 가지고가야하므로 id값이 필요함 
+			<!-- 수정버튼은 누르면 질문을 수정하는 화면으로 넘어가야함. 새로운 부분이 있으므로 코드를 하나씩 입력하면서, 현재 질문이 몇번째 값인지 가지고가야하므로 id값이 필요함 
 			수정도 로그인이 되어야만 수정할 수 있도록,sequrity authorize이용함
 			질문에 대한 수정할때 질문에 되어있는 글쓴이랑 로그인한 글쓴이가 같아야 한다는 조건 추가
-			수정버튼 누르면 modify로 이동하니까 controller에서 입력받는 부분을 연결시킴
+			수정버튼 누르면 modify로 이동하니까 controller에서 입력받는 부분을 연결시킴 -->
 						<div class="my-3"> <!-- 마진 3 -->
 				<a th:href="@{|/question/modify/${questrion.id}|}"
 					class="btn btn-sm btn-outline-secondaty"
@@ -66,7 +66,7 @@
 		</div>
 	</div> 
 			
-	<!-- 답변 기능 추가 , url로 요청 보낼때는 @-->
+	<!-- 답변 기능 추가 , url로 요청 보낼때는 @ -->
 	<form th:object="${answerForm}" class="my-3" th:action="@{|/answer/create/${question.id}|" method="post">
 		
 		<div th:replace="~{form_errors:: formErrorsFragment}"></div>

@@ -128,7 +128,7 @@ public class QuestionController {
     
     /*question 등록할때의 폼을 수정할때의 폼으로 쓰는 이유는 , 요약하면 수정폼을 만들지 않고 등록할때의 폼을 쓰는 이유는
     form태그 안에있는 action을 지워서 사용함
-    action 속성이 없이 폼을 submit하면 자동으로 현재 url 기준으로 전달되*/
+    action 속성이 없이 폼을 submit하면 자동으로 현재 url 기준으로 전달됨*/
     return "question_form"
     
 }
