@@ -74,6 +74,16 @@
 					</div>
 				</div>
 			</div>
+			
+			<!--  답변 수정, 삭제 버튼 -->
+				<div class="my-3"> <!-- 마진 3 -->
+					<a th:href="@{|/answer/modify/${answer.id}|}"
+						class="btn btn-sm btn-outline-secondaty"
+						sec:authorize="isAuthenticated()"
+						th:if="${answer.author != null and 
+							#authentication.getPrinciapl().getUsername() == answer.author.username}"
+					th:text="수정">
+					</a>
 		</div>
 	</div> 
 			 

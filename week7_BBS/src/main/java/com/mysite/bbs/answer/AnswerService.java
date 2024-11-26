@@ -21,4 +21,20 @@ public class AnswerService {
 		answer.setQuestion(question);
 		answerRepository.save(answer);
 	}
+
+	public Answer getAnswer(int id) {
+		Optional<Answer> answer = this.answerRepository.findById(id);
+		
+		if (answer.isPresent()) 
+			return answer.get();  
+		else 
+			throw new DataNotFoundException("answer not found");
+		}
+	
+	//답변 수정
+	public void modify(Answer answer,String content) {
+		answer.setContent(content);
+		answerRepository.save(answer);
+	}
+	
 }

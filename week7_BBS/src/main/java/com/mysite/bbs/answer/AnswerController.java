@@ -43,4 +43,44 @@ public class AnswerController {
 		return String.format("redirect:/question/detail/%s", id);
 	
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping("/modify/{id}")
+	public String answerModify(@Valid AnswerForm answerForm, 
+										@PathVariable("id") Integer id,					
+										Principal principal,
+										) {
+	
+		Answer answer = answerService.getAnswer(id);
+
+		if (!answer.getAuthor().getUsername().equals(principal.getName())) { //answer에 getAuthor한게 = principal 객체의 getName한 로그인정보와 같아야함
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다."); //
+		}
+		
+	
+		answerForm.setContent(answer.getContent());
+		return "answer_form";
+	}
+	
+	
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping("/modify/{id}")
+	public String answerModify(@Valid AnswerForm answerForm, 
+			@PathVariable("id") Integer id,					
+			Principal principal.
+			BindingResult bindingResult 
+			) {
+		
+		if (bindingResult.hasErrors()) {
+			return "answer_form";
+		}
+		
+		Answer answer = this.answerService.getAnswer(id);
+		if (!answer.getAuthor().getUsername().equals(principal.getName())) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+		}
+		this.answerService.modify(answer, answerForm.getContent()); //엔서폼에 바인딩된값을 modify해 준 후 , detail페이지로 넘겨주면 됨
+		return String.format("redirect:/question/detail/%s", answer.getQuestion().getId(), answer.getId()); //엔서 아이디에 있는 question의 id 값을 가져와야해서 answer.getQuestion().getI() 해줌
+	}
+	
 }
