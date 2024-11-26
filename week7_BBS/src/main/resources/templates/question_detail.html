@@ -42,6 +42,17 @@
 		</div>
 	</div>
 
+	<!-- 질문 내용 삭제 버튼 추가 -->
+	<div class="my-3">
+	<a href="javascript:void(0);" 
+		th:data-uri="@{|/question/delete/${question.id}|}"
+		class="delete btn btn-sm btn-outline-secondary" 
+		sec:authorize="isAuthenticated()"
+		th:if="${question.author != null and 
+		#authentication.getPrincipal().getUsername() == question.author.username}"
+		th:text="삭제"></a>
+	</div>
+
 	<!-- 답변 개수 표시하기 -->
 	<h5 class="border-bottom my-3 py-2" 
 		th:text="${|#lists.size(question.answerList)} 개의 답변이 있습니다.|"></h5> <!-- //등록된 답변 갯수 , th가 제공하는 명령문은 #, 파이프 기호는 성격이다른 (예:string 과 int)가 있으면 양쪽에 넣어줌-->
@@ -65,7 +76,7 @@
 			</div>
 		</div>
 	</div> 
-			
+			 
 	<!-- 답변 기능 추가 , url로 요청 보낼때는 @ -->
 	<form th:object="${answerForm}" class="my-3" th:action="@{|/answer/create/${question.id}|" method="post">
 		
@@ -78,6 +89,16 @@
 		<a class= "btn btn-primary" href="/question/insertform" role="botton">등록화면 </a>
 		<a class= "btn btn-primary" href="/question/index" role="botton">초기화면</a>
 </div>
+
+<script layout:fragment="script" type='text/javascript'>
+	const delete_elements = document.getElementsByClassName("delete");
+	Array.from(delete_elements).forEach(function (element) {
+		element.addEventListener('click', function () {
+			if (confirm("정말로 삭제하시겠습니까?")) {
+				location.href = this.dataset.uri;
+			};
+		});
+	});
 
 </body>
 </html>

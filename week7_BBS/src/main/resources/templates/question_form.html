@@ -5,7 +5,11 @@
 	<h5 class="my-3 border-bottom pd-2">질문등록</h5>
 
 	
-	<form th:action="@{/question/create/}" th:object="${questionForm}" method="post"> <!-- 값없이 get방식과 값있게 post 방식 -->
+	< form th:object="${questionForm}" method="post"> <!-- 값없이 get방식과 값있게 post 방식 -->
+		<!-- csrf 토큰 생성 -->
+		<input type="hidden" th:name="${_csrf.parameterName}"
+			th:value="${_csrf.token}" >
+		
 		<!-- 오류발생시 오류 메시지 표시 -->
 		<div th:replace="~{form_errors:: formErrorsFragment}"></div>
 		<div th:each="err : ${#fields.allErorrs()}"

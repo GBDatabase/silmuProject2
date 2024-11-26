@@ -131,6 +131,39 @@ public class QuestionController {
     action 속성이 없이 폼을 submit하면 자동으로 현재 url 기준으로 전달됨*/
     return "question_form"
     
+    		
+    		
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping("/modify/{id}")
+	public String questionModify(@Valid QuestionForm questionForm, BindingResult bindingResult, Principal principal, //폼클래스를 입력하여 유효성 검증
+			@PathVariable("id") int id) {
+		
+    	if (bindingResult.hasErrors()) {
+			return "question_form";
+		}
+		
+		Question question = qService.getQuestion(id); 
+ 		if (!question.getAuthor().getUsername().equals(principal.getName())) { //글쓴이하고 로그인한 정보의 사용자가 동일해야함
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다."); 
+		}
+		
+		this.qService.modify(question, questionForm.getSubject(), questionForm.getContent()); //입력받는 곳 :questionForm에
+		return String.format("redirect:/question/detail/%s", id); //detail페이지에 id를 넘겨서 detail페이지에서 확인가능하게 함
+	}    		
+	
+		
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/delete/{id}")
+	public String questionDelete(@PathVariable("id") int id,
+								Principal principal ) { //로그인한 정보 principal로 받음
+		Question question = qService.getQuestion(id);
+		
+		if (!question.getAuthor().getUsername().equals(principal.getName())) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
+		}
+		qService.delete(question);
+		return "redirect:/";
+	}
 }
 
 
