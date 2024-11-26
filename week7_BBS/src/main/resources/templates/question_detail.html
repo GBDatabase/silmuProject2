@@ -16,7 +16,14 @@
 		<div class="card-body">
 			<div class="card-text" th:text="${question.content"> 
 			</div>
-			<div class="card-d-flex justify-content-end">  <!-- 컨텐츠 정렬을 제일 오른쪽 끝에 하겠다 --> 
+			<div class="d-flex justify-content-end">  <!-- 컨텐츠 정렬을 제일 오른쪽 끝에 하겠다 --> 
+			<!-- 수정일자 표시 -->>
+			<div th:if="${question.modifyDate != null}" 
+						class="badge bg-light text-dark p-2 text-start mx-3">
+					<div class="mb-2">modified
+					</div>
+					<div th:text="${#temporals.format(question.modifyDate, 'yyyy-MM-dd HH:mm')}"></div> <!-- //#temporals.format를 사용함 -->
+				</div>
 				<div class="badge bg-light text-dark p-2 text-start">
 						<div class="mb-2">
 						<span th:if="${author != null}"
@@ -63,6 +70,16 @@
 			<div class="card-text" th:text="${answer.content}">
 			</div>
 			<div class="d-flex justify-content-end">
+			
+			<!-- 답변수정일자 표시 -->>
+			<div th:if="${question.modifyDate != null}" 
+						class="badge bg-light text-dark p-2 text-start mx-3">
+					<div class="mb-2">modified
+					</div>
+					<div th:text="${#temporals.format(answer.modifyDate, 'yyyy-MM-dd HH:mm')}"></div> <!-- //#temporals.format를 사용함 -->
+				</div>
+				
+				
 				<div class="badge bg-light text-dark p-2 text-start">
 					</div>
 				<div class="mb-2">
@@ -84,6 +101,15 @@
 							#authentication.getPrinciapl().getUsername() == answer.author.username}"
 					th:text="수정">
 					</a>
+					
+					<a th:href="@{|/answer/delete/${answer.id}|}"
+						class="btn btn-sm btn-outline-secondaty"
+						sec:authorize="isAuthenticated()"
+						th:if="${answer.author != null and 
+							#authentication.getPrinciapl().getUsername() == answer.author.username}"
+					th:text="삭제">
+					</a>	
+		
 		</div>
 	</div> 
 			 

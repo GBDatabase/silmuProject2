@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 
-</body>
+
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container-my-3">
+	<h5>답변 수정</h5>
+	<form th:object="${answerForm}" method="post"> <!-- //동일한 아이디값이 재요청됨 -->
+		<input  type="hidden" 
+				th:name="${_csrf.parameterName}"
+				th:value="${_csrf.token}" /> <!-- //action이 없어지면 ~~하기때문에 "hidden 넣어주기" -->
+		<div th:replace="~{form_errors :: formErrorsFragment}"></div>
+		
+		
+		<div class="mb-3">
+			<label for="content" class="form-label">내용</label>
+			<textarea th:field="*{content}" class="form-control" rows="10"></textarea> //오브젝트를 쓰면 field값을 쓸 수 이씅ㅁ
+		</div>
+		
+		
+		<input type="submit" value="저장하기" class="btn btn-primary my-2">
+	</form>
+</div>
+
 </html>
