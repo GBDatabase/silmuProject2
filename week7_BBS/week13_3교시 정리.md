@@ -1,6 +1,6 @@
 # (1) AnswerController의 delete 부분 추가
 
-
+```
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping("/delete/{id}")
 	public String answerDelete(Principal principal, @PathVariable("id") Integer id) {
@@ -11,18 +11,19 @@
 		this.answerService.delete(answer);
 		return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
 	}
-
+```
 
 
 
 
 # (2) answerSerice에 이거 넣어주기
 
+```
 	//답변 삭제
 	public void delete(Answer answer) {
 		answerRepository.delete(answer);
 	}
-	
+```	
 	
 # 1. 추천기능넣기
 
@@ -34,18 +35,21 @@
 
 (1) question.java에
 
+```
 	@ManyToMany
     Set<SiteUser> voter;
-    
+```    
     
 (2) answer.java에 
 
+```
 	@ManyToMany
     Set<SiteUser> voter;
-    
+```    
     
 (3) question_detail에 
 
+```
 <div class="my-3">
 	<a href="javascript:void(0);"
 	  class="recommend btn btn-sm btn-outline-secondary"
@@ -55,16 +59,18 @@
 		th:text="${#lists.size(answer.voter)}"></span>
 	</a>
 </div>
-				
+```				
 
 
-//몇명이나 추천했는지 보여주는
+# 몇명이나 추천했는지 보여주는
+
+```
 <span class="badge rounded-pill bg-success" th:text="${#lists.size(answer.voter)}"></span>
-    
+```   
     
 (4) question_detail에 아래에
 
-
+```
 	const recommend_elements = document.getElementsByClassName("recommend");
 	Array.from(delete_elements).forEach(function (element) {
 		element.addEventListener('click', function () {
@@ -73,26 +79,30 @@
 			};
 		});
 	});
-	
-	---
-	
-						th:data-uri="@{|/question/vote/${answer.id}|}">
-						
+```	
+
+# locatin.href = this.dataset.uri에서 들어가는 것은
+
+```
+<th:data-uri="@{|/question/vote/${answer.id}|}">
+```						
 						
 	이게들어감
 	
 	
 (5) question service에 vote()
 
+```
 	public void vote(Question question, SiteUser siteUser) {
 		question.getVoter().add(siteUser);
 		qRepository.save(question);
 	}
-	
+```	
 	
 	
 (6) questionController에
 
+```
 @PreAuthorize("isAuthenticated()")
 	@GetMapping("/vote/{id}")
 	public String questionVote(Principal principal, 
@@ -102,6 +112,4 @@
 		qService.vote(question, siteUser);
 		return String.format("redirect:/question/detail/%s", id);
 	}
-		
-	
-	
+```		
