@@ -1,6 +1,5 @@
-#답변도 수정해봄
-
 (1) 	question_detail에 
+
 ```
 <div class="my-3"> <!-- 마진 3 -->
     <a th:href="@{|/answer/modify/${answer.id}|}"
@@ -14,6 +13,7 @@
 
 
 (2) answerService에 Modify()
+
 ```
 //답변 수정
 public void modify(Answer answer,String content) {
@@ -72,6 +72,7 @@ public String answerModify(@Valid AnswerForm answerForm,
 ```
 
 (5) answerController의 answerModify를 작성한다
+
 ```
 @PreAuthorize("isAuthenticated()")
 @PostMapping("/modify/{id}")
@@ -96,6 +97,7 @@ public String answerModify(@Valid AnswerForm answerForm,
 	
 	
 (6) 답변 수정 삭제버튼의 삭제버튼 내용 추가
+
 ```
 <!--  답변 수정, 삭제 버튼 -->
     <div class="my-3"> <!-- 마진 3 -->
@@ -116,7 +118,7 @@ public String answerModify(@Valid AnswerForm answerForm,
         th:text="삭제">
         </a>	
     div>
-```	
+```
 		
 
 
@@ -129,7 +131,7 @@ public String answerModify(@Valid AnswerForm answerForm,
     <div class="mb-2">modified at</div>
     <div th:text="${#temporals.format(question.modifyDate, 'yyyy-MM-dd HH:mm')}"></div>
 </div>
-```	
+```
 			
 ```
 <!-- 답변수정일자 표시 -->>
@@ -139,4 +141,4 @@ public String answerModify(@Valid AnswerForm answerForm,
 		</div>
 		<div th:text="${#temporals.format(answer.modifyDate, 'yyyy-MM-dd HH:mm')}"></div> <!-- //#temporals.format를 사용함 -->
 </div>
-```		
+```

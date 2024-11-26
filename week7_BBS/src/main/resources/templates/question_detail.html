@@ -32,6 +32,19 @@
 					<div th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd hh:mm'")}></div>
 				</div>
 			</div>
+			
+			<div class="my-3">
+				<a href="javascript:void(0);"
+				  class="recommend btn btn-sm btn-outline-secondary"
+					th:data-uri="@{|/question/vote/${answer.id}|}">
+					추천
+					<span class="badge rounded-pill bg-success" 
+					th:text="${#lists.size(question.voter)}"></span>
+				</a>
+			</div>
+			
+			
+			
 			<!-- 질문 내용 수정 버튼 추가 -->
 			<!-- 수정버튼은 누르면 질문을 수정하는 화면으로 넘어가야함. 새로운 부분이 있으므로 코드를 하나씩 입력하면서, 현재 질문이 몇번째 값인지 가지고가야하므로 id값이 필요함 
 			수정도 로그인이 되어야만 수정할 수 있도록,sequrity authorize이용함
@@ -136,5 +149,14 @@
 		});
 	});
 
+	const recommend_elements = document.getElementsByClassName("recommend");
+	Array.from(delete_elements).forEach(function (element) {
+		element.addEventListener('click', function () {
+			if (confirm("정말로 추천하시겠습니까?")) {
+				location.href = this.dataset.uri;
+			};
+		});
+	});
+	
 </body>
 </html>

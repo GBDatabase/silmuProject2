@@ -38,4 +38,9 @@ public class AnswerService {
 		answerRepository.save(answer);
 	}
 	
+	
+	//답변 삭제
+	public void delete(Answer answer) {
+		answerRepository.delete(answer);
+	}
 }
