@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.mysite.bbs.answer.SiteUser;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -62,5 +64,12 @@ public class QuestionService {
 	public void vote(Question question, SiteUser siteUser) {
 		question.getVoter().add(siteUser);
 		qRepository.save(question);
+	}
+	
+	
+
+	public void vote(Question question, SiteUser siteUser) {
+		question.getVoter().add(siteUser);
+		questionRepository.save(question);
 	}
 }

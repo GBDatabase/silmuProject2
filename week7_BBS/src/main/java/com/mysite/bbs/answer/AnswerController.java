@@ -39,8 +39,8 @@ public class AnswerController {
 		
 		
 		// 답변을 저장하는 코드
-		answerService.create(question, answerForm.getContent());
-		return String.format("redirect:/question/detail/%s", id);
+		Answer answer= answerService.create(question, answerForm.getContent());
+		return String.format("redirect:/question/detail/%s#answer_%s",id,answer.getId());
 	
 	}
 	
@@ -80,7 +80,9 @@ public class AnswerController {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
 		}
 		this.answerService.modify(answer, answerForm.getContent()); //엔서폼에 바인딩된값을 modify해 준 후 , detail페이지로 넘겨주면 됨
-		return String.format("redirect:/question/detail/%s", answer.getQuestion().getId(), answer.getId()); //엔서 아이디에 있는 question의 id 값을 가져와야해서 answer.getQuestion().getI() 해줌
+		return String.format("redirect:/question/detail/%s#answer_%s",
+				answer.getQuestion().getId(), answer.getId()
+				answer.getId()mm); //엔서 아이디에 있는 question의 id 값을 가져와야해서 answer.getQuestion().getI() 해줌
 	}
 	
 	@PreAuthorize("isAuthenticated()")
@@ -93,5 +95,15 @@ public class AnswerController {
 		this.answerService.delete(answer);
 		return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
 	}
-	
+
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/vote/{id}")
+	public String answerVote(Principal principal, @PathVariable("id") int id) {
+		Answer answer =answerService.getAnswer(id);
+		SiteUser siteUser =userService.getUser(principal.getName());
+		answerService.vote(answer, siteUser);
+		return String.format("redirect:/question/detail/%s#answer_%s", 
+				answer.getQuestion().getId(), 
+				answer.getId());
+	}
 }
