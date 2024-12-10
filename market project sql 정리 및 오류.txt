@@ -1,0 +1,58 @@
+market project sql 정리 및 오류
+
+1. h2-console 을 사용했으며 이렇게 따로 넣을 수도 있지만
+
+```
+
+INSERT INTO product (id, code, name, quantity, price, vendor, category)
+VALUES (1, 'P001', '형광펜', 100, 10.99, 'A컴퍼니', '문구');
+INSERT INTO product (id, code, name, quantity, price, vendor, category)
+VALUES (2, 'P002', '물티슈', 200, 20.99, 'B컴퍼니', '생활용품');
+
+```
+
+---
+
+2. data.sql 파일을 만들어  templates 아래에 넣으면 위와달리 h2-console이 꺼져도 날라가지 않음
+
+
+
+--- 
+
+
+3. 데이블은 이렇게 되어있음
+
+product table에 들어갈 데이터:
+
+ID  	CATEGORY  	CODE  	NAME  	PRICE  	QUANTITY  	VENDOR  
+
+user table에 들어갈 데이터 :
+
+ID  	EMAIL  	PASSWORD  	ROLE  	USERNAME 
+
+transaction 테이블에 들어가는 데이터:
+
+ID  	QUANTITY  	TOTAL_PRICE  	TRANSACTION_DATE  	BUYER_ID  	PRODUCT_ID  
+ 
+
+---
+
+하다보면 오류가 생기는데
+오류 1 : 외래키 제약조건 이있을 시 
+
+해결방법1 : 아래와 같이 제약조건을 삭제함
+ALTER TABLE TRANSACTION DROP CONSTRAINT FK1BKEYN2XHCNK7JNXPJ1XVJD5M;
+DROP TABLE IF EXISTS PRODUCT;
+
+
+해결방법 2 : 테이블 초기화
+
+CREATE TABLE PRODUCT (
+    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    CODE VARCHAR(255) NOT NULL UNIQUE,
+    NAME VARCHAR(255) NOT NULL,
+    QUANTITY INT NOT NULL,
+    PRICE DOUBLE NOT NULL,
+    VENDOR VARCHAR(255) NOT NULL,
+    CATEGORY VARCHAR(255) NOT NULL
+);

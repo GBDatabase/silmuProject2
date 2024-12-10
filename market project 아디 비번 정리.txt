@@ -1,0 +1,11 @@
+market project 아디 비번 정리
+
+h2 console 로그인
+	testdb
+	id : sa
+	pw : mysecretpassword
+
+
+/login 에서 로그인 (systemConfigure.java 에 저장시켜둠)
+	id : 2*******(학번) 
+	pw :  1121 
